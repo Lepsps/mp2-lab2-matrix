@@ -255,22 +255,29 @@ TEST(TDynamicVector, cant_multiply_vectors_with_not_equal_size)
 	ASSERT_ANY_THROW(v * v1);
 }
 
-TEST(TDynamicVector, can_move_semantic)
+TEST(TDynamicVector, do_move_semantic)
 {
 	TDynamicVector<int> v(5);
-	int tmp = (int)&v;
+	int* tmp = v.get_pMem();
 	TDynamicVector<int> v1(std::move(v));
 
 
-	ASSERT_NE(tmp, (int)&v1);
+	ASSERT_EQ(v.size(), 0);
+	ASSERT_EQ(v.get_pMem(), nullptr);
+
+	ASSERT_EQ(v1.size(), 5);
+	ASSERT_EQ(v1.get_pMem(), tmp);
 }
 
-TEST(TDynamicVector, can_move_semantic_operator)
-{
+TEST(TDynamicVector, do_move_semantic_operator) {
 	TDynamicVector<int> v(5);
-	int tmp = (int)&v;
+	int* tmp = v.get_pMem();
 	TDynamicVector<int> v1 = std::move(v);
 
-	ASSERT_NE(tmp, (int)&v1);
+	ASSERT_EQ(v.size(), 0);
+	ASSERT_EQ(v.get_pMem(), nullptr);
+
+	ASSERT_EQ(v1.size(), 5);
+	ASSERT_EQ(v1.get_pMem(), tmp);
 
 }

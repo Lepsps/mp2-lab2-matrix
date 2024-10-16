@@ -78,6 +78,8 @@ public:
 
     size_t size() const noexcept { return sz; }
 
+    T* get_pMem() { return pMem; }
+
     // индексация
     T& operator[](size_t ind)
     {
